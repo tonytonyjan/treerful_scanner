@@ -17,6 +17,8 @@ Usage: treerful [options]
 
 ## Example / 範例
 
+* `O` 表示尚未出租的時段
+
 ```
 $ treerful_scanner -d 2018-08-20
 2018-09-20          6   7   8   9   10  11  12  13  14  15  16  17  18  19  20  21  22  23
