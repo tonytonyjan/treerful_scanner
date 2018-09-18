@@ -1,0 +1,27 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require 'treerful_scanner'
+require 'date'
+require 'optparse'
+
+options = {
+  date: (Date.today + 1).to_s
+}
+
+OptionParser.new do |opts|
+  opts.banner = "Usage: #{File.basename __FILE__} [options]"
+  opts.on('-d DATE', '--date=DATE', 'yyyy-mm-dd') do |date|
+    options[:date] = date
+  end
+end.parse!
+
+client = TreerfulScanner::Client.new
+printer = TreerfulScanner::Printer.new([], options[:date])
+
+count = 0
+client.search_by_date(options[:date]) do |table|
+  print printer.header if count % 10 == 0
+  print printer.row(table)
+  count += 1
+end
