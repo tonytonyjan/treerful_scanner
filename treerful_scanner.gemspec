@@ -2,10 +2,11 @@
 
 Gem::Specification.new do |spec|
   spec.name = 'treerful_scanner'
-  spec.version = '1.0.0'
+  spec.version = '1.0.1'
   spec.author = 'Jian Weihang'
   spec.email = 'tonytonyjan@gmail.com'
   spec.license = 'MIT'
+  spec.homepage = 'https://github.com/tonytonyjan/treerful_scanner'
   spec.summary = '小樹屋掃描器 - 找出特定日期所有小樹屋的時間表'
   spec.files = Dir['lib/**/*.rb']
   spec.executables << 'treerful_scanner'
