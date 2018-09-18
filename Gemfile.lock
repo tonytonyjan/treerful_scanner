@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    treerful_scanner (1.0.0)
+    treerful_scanner (1.0.1)
       em-http-request
       nokogiri
 
