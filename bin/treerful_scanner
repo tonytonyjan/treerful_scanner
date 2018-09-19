@@ -6,22 +6,53 @@ require 'date'
 require 'optparse'
 
 options = {
-  date: (Date.today + 1).to_s
+  date: (Date.today + 1).to_s,
+  places: [],
+  place_names: [],
+  format: 'terminal'
 }
 
 OptionParser.new do |opts|
   opts.banner = "Usage: #{File.basename __FILE__} [options]"
-  opts.on('-d DATE', '--date=DATE', 'yyyy-mm-dd') do |date|
+  opts.on('-d DATE', '--date DATE', 'yyyy-mm-dd') do |date|
     options[:date] = date
+  end
+
+  opts.on('-n x,y,z', '--place-names x,y,z', Array, 'Filter by place names') do |place_names|
+    options[:place_names] = place_names
+  end
+
+  opts.on('-p x,y,z', '--places x,y,z', Array, 'Filter by place IDs') do |ids|
+    options[:places] = ids
+  end
+
+  opts.on('-f FORMAT', '--format FORMAT', '"terminal" (default) or "html"') do |format|
+    options[:format] = format
   end
 end.parse!
 
 client = TreerfulScanner::Client.new
-printer = TreerfulScanner::Printer.new([], options[:date])
 
-count = 0
-client.search_by_date(options[:date]) do |table|
-  print printer.header if count % 10 == 0
-  print printer.row(table)
-  count += 1
+place_filter = -> (place) do
+  flag = false
+  flag = options[:place_names].any?{ |name| place.name.include?(name) } unless options[:place_names].empty?
+  flag = options[:places].include?(place.id) unless options[:places].empty?
+  flag
+end
+
+case options[:format]
+when 'terminal'
+  printer = TreerfulScanner::Printer.new([], options[:date])
+  count = 0
+  client.search_by_date(options[:date], place_filter: place_filter) do |table|
+    print printer.header if count % 10 == 0
+    print printer.row(table)
+    count += 1
+  end
+when 'html'
+  time_tables = client.search_by_date(options[:date], place_filter: place_filter)
+  printer = TreerfulScanner::HtmlPrinter.new(time_tables, options[:date])
+  puts printer.print
+else
+  raise "unknown format: #{options[:format]}"
 end

@@ -10,7 +10,7 @@ module TreerfulScanner
       @parser = Parser.new
     end
 
-    def search_by_date(date)
+    def search_by_date(date, place_filter: -> { true })
       date = date.to_s
       result = []
       EventMachine.run do
@@ -18,7 +18,7 @@ module TreerfulScanner
         client = conn.get path: '/space/result', keepalive: true
         client.callback do
           multi = EventMachine::MultiRequest.new
-          places = @parser.parse_places(client.response)
+          places = @parser.parse_places(client.response).select(&place_filter)
           places.each do |place|
             client2 = conn.get path: "/space/allowTimes?id=#{place.id}&date=#{date}", keepalive: true
             client2.callback do

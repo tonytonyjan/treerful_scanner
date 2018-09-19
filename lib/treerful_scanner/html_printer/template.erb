@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title><%= date %> 小樹屋</title>
+  <style>
+    html {
+      box-sizing: border-box;
+    }
+
+    *,
+    *:before,
+    *:after {
+      box-sizing: inherit;
+    }
+
+    .top-header {
+      display: flex;
+    }
+
+    .top-header>.definition-list {
+      margin-left: 24px;
+    }
+
+    .definition-list {
+      display: grid;
+      grid-template-columns: 32px auto;
+    }
+
+    .definition-list>*:nth-child(even) {
+      margin: 0;
+      padding: 0;
+      margin-left: 12px;
+    }
+
+    .definition-list>*:nth-child(1) {
+      background: lightgreen;
+    }
+
+    .definition-list>*:nth-child(3) {
+      background: darkred;
+    }
+
+    table {
+      border-collapse: collapse;
+    }
+
+    th:not(:first-child):not(:nth-child(2)) {
+      transform: translateX(-50%);
+    }
+
+    td:not(:first-child):not(:nth-child(2)) {
+      width: 32px;
+      background: darkred;
+      border: 1px solid white;
+      border-top: none;
+      border-bottom: none;
+    }
+
+    td:not(:first-child):not(:nth-child(2)).available {
+      background: lightgreen;
+    }
+
+    td:first-child,
+    td:nth-child(2) {
+      white-space: nowrap;
+      text-align: right;
+    }
+
+    td:nth-child(2) {
+      padding: 0 24px;
+    }
+
+    td > a {
+      text-decoration: none;
+      color: inherit;
+    }
+  </style>
+</head>
+
+<body>
+  <header class="top-header">
+    <h1 class="title"><%= date %> 小樹屋</h1>
+    <dl class="definition-list">
+      <dt></dt>
+      <dd>未被租用</dd>
+      <dt></dt>
+      <dd>已被租用</dd>
+    </dl>
+  </header>
+  <table>
+    <thead>
+      <tr>
+        <th>房號</th>
+        <th>人數</th>
+        <th>6</th>
+        <th></th>
+        <th>7</th>
+        <th></th>
+        <th>8</th>
+        <th></th>
+        <th>9</th>
+        <th></th>
+        <th>10</th>
+        <th></th>
+        <th>11</th>
+        <th></th>
+        <th>12</th>
+        <th></th>
+        <th>13</th>
+        <th></th>
+        <th>14</th>
+        <th></th>
+        <th>15</th>
+        <th></th>
+        <th>16</th>
+        <th></th>
+        <th>17</th>
+        <th></th>
+        <th>18</th>
+        <th></th>
+        <th>19</th>
+        <th></th>
+        <th>20</th>
+        <th></th>
+        <th>21</th>
+        <th></th>
+        <th>22</th>
+        <th></th>
+        <th>23</th>
+        <th></th>
+      </tr>
+    </thead>
+    <%= tbody %>
+  </table>
+</body>
+
+</html>

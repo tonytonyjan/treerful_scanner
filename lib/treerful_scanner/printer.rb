@@ -17,18 +17,21 @@ module TreerfulScanner
     end
 
     def row(time_table)
-      tmp = String.new
-      tmp << ' ' * (BEGIN_HOUR..END_HOUR).size * 2
+      fixed_string(time_table.place.name, TITLE_WIDTH) +
+        binary_form(time_table).each_char.map { |i| format('%-2s', i) }.join +
+        "\n"
+    end
+
+    def binary_form(time_table)
+      result = String.new
+      result << ' ' * (BEGIN_HOUR..END_HOUR).size * 2
       offset = BEGIN_HOUR * 60
       time_table.durations.each do |duration|
         start = (duration.from - offset) / 30
         finish = (duration.to - offset) / 30
-        tmp[start..finish] = 'O' * (finish - start + 1)
+        result[start...finish] = 'O' * (finish - start)
       end
-
-      fixied_string(time_table.place.name, TITLE_WIDTH) +
-        tmp.each_char.map { |i| format('%-2s', i) }.join +
-        "\n"
+      result
     end
 
     def print
@@ -42,7 +45,7 @@ module TreerfulScanner
 
     private
 
-    def fixied_string(string, width)
+    def fixed_string(string, width)
       length = string.length + string.scan(/\p{Han}|\p{Katakana}|\p{Hiragana}\p{Hangul}/).length
       diff = width - length
       return string + (' ' * diff) if diff > 0
