@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |spec|
   spec.name = 'treerful_scanner'
-  spec.version = '1.1.2'
+  spec.version = '1.1.3'
   spec.author = 'Jian Weihang'
   spec.email = 'tonytonyjan@gmail.com'
   spec.license = 'MIT'
