@@ -18,7 +18,7 @@ module TreerfulScanner
       Dir.mktmpdir do |dir|
         html_path = "#{dir}/output.html"
         IO.write(html_path, html_printer.print)
-        chrome_bin = CHROME_BINS.find(&File.method(:exist?)) || ENV['CHROME_BIN']
+        chrome_bin = CHROME_BINS.find{ |bin| system('which', bin, out: '/dev/null') } || ENV['CHROME_BIN']
         raise 'ENV["CHROME_BIN"] is nil' unless chrome_bin
         window_height = WINDOW_HEIGHT_OFFSET + WINDOW_CELL_HEIGHT * @time_tables.length
         Dir.chdir(dir) do
