@@ -33,7 +33,7 @@ module TreerfulScanner
             '--hide-scrollbars',
             "--window-size=1280,#{window_height}",
             html_path,
-            out: '/dev/null'
+            %i[out err] => '/dev/null'
           )
           IO.read('screenshot.png', mode: 'rb')
         end
