@@ -26,7 +26,7 @@ OptionParser.new do |opts|
     options[:places] = ids
   end
 
-  opts.on('-f FORMAT', '--format FORMAT', '"terminal" (default) or "html"') do |format|
+  opts.on('-f FORMAT', '--format FORMAT', '"terminal" (default), "html", "png"') do |format|
     options[:format] = format
   end
 end.parse!
@@ -34,10 +34,10 @@ end.parse!
 client = TreerfulScanner::Client.new
 
 place_filter = -> (place) do
-  flag = false
-  flag = options[:place_names].any?{ |name| place.name.include?(name) } unless options[:place_names].empty?
-  flag = options[:places].include?(place.id) unless options[:places].empty?
-  flag
+  return true if options[:place_names].empty? && options[:places].empty?
+  return options[:place_names].any?{ |name| place.name.include?(name) } unless options[:place_names].empty?
+  return options[:places].include?(place.id) unless options[:places].empty?
+  false
 end
 
 case options[:format]
@@ -52,7 +52,11 @@ when 'terminal'
 when 'html'
   time_tables = client.search_by_date(options[:date], place_filter: place_filter)
   printer = TreerfulScanner::HtmlPrinter.new(time_tables, options[:date])
-  puts printer.print
+  print printer.print
+when 'png'
+  time_tables = client.search_by_date(options[:date], place_filter: place_filter)
+  printer = TreerfulScanner::PngPrinter.new(time_tables, options[:date])
+  print printer.print
 else
   raise "unknown format: #{options[:format]}"
 end
