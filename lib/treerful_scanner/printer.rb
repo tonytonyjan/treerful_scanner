@@ -3,7 +3,7 @@
 module TreerfulScanner
   class Printer
     BEGIN_HOUR = 6
-    END_HOUR = 23
+    END_HOUR = 23.5
     TITLE_WIDTH = 20
     @time_tables = []
 
@@ -24,7 +24,7 @@ module TreerfulScanner
 
     def binary_form(time_table)
       result = String.new
-      result << ' ' * (BEGIN_HOUR..END_HOUR).size * 2
+      result << ' ' * ((END_HOUR - BEGIN_HOUR) * 2)
       offset = BEGIN_HOUR * 60
       time_table.durations.each do |duration|
         start = (duration.from - offset) / 30

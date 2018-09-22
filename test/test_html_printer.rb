@@ -23,7 +23,7 @@ module TreerfulScanner
         ]
       end
       assert_equal(
-        '<tr><td><a href="https://www.treerful.com/space/123" rel="noopener noreferrer" target="_blank">Foo</a></td><td>12</td><td></td><td></td><td></td><td></td><td></td><td></td><td class="available"></td><td class="available"></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="available"></td><td class="available"></td><td class="available"></td><td class="available"></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="available"></td><td class="available"></td><td class="available"></td><td class="available"></td><td class="available"></td><td class="available"></td><td class="available"></td><td></td><td></td><td></td><td></td><td></td></tr>',
+        '<tr><td><a href="https://www.treerful.com/space/123" rel="noopener noreferrer" target="_blank">Foo</a></td><td>12</td><td></td><td></td><td></td><td></td><td></td><td></td><td class="available"></td><td class="available"></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="available"></td><td class="available"></td><td class="available"></td><td class="available"></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="available"></td><td class="available"></td><td class="available"></td><td class="available"></td><td class="available"></td><td class="available"></td><td class="available"></td><td></td><td></td><td></td><td></td></tr>',
         printer.send(:to_tr, time_table)
       )
     end
