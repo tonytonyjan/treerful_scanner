@@ -44,7 +44,7 @@ module TreerfulScanner
           place.id = element['href'][%r{/space/(\d+)}, 1]
           place.name = element.at_css('h3').text
           place.volume = element.at_css('p').text[/\d+/].to_i
-          place.images << element.at_css('.bookingImg')['style'][/url\(['"]?([^'")]+)['"]?\)/, 1]
+          place.images << element.at_css('img')['src']
         end
       end
     end
