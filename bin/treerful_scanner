@@ -9,7 +9,8 @@ options = {
   date: (Date.today + 1).to_s,
   places: [],
   place_names: [],
-  format: 'terminal'
+  format: 'terminal',
+  volume: 1
 }
 
 OptionParser.new do |opts|
@@ -29,15 +30,19 @@ OptionParser.new do |opts|
   opts.on('-f FORMAT', '--format FORMAT', '"terminal" (default), "html", "png"') do |format|
     options[:format] = format
   end
+
+  opts.on('-v NUMBER_OF_PEOPLE', '--volume NUMBER_OF_PEOPLE', Integer) do |volume|
+    options[:volume] = volume
+  end
 end.parse!
 
 client = TreerfulScanner::Client.new
 
 place_filter = -> (place) do
-  return true if options[:place_names].empty? && options[:places].empty?
-  return options[:place_names].any?{ |name| place.name.include?(name) } unless options[:place_names].empty?
-  return options[:places].include?(place.id) unless options[:places].empty?
-  false
+  return false if place.volume < options[:volume]
+  return false unless options[:place_names].empty? || options[:place_names].any?{ |name| place.name.include?(name) }
+  return false unless options[:places].empty? || options[:places].include?(place.id)
+  true
 end
 
 case options[:format]
